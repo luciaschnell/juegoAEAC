@@ -1,0 +1,223 @@
+/* ==========================================================================
+   RETO CASTILLOS DE ESPAÑA - PANTALLA FINAL, TARJETA VIRAL Y CONVERSIÓN AEAC
+   ========================================================================== */
+
+.results-stage {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.results-hero-card {
+  background: var(--color-blanco);
+  border: 1px solid var(--color-pergamino-borde);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.results-hero-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--color-dorado) 0%, var(--color-verde-oscuro) 100%);
+}
+
+.results-crown-icon {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  animation: crownPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes crownPop {
+  0% { transform: scale(0.4) rotate(-15deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.results-title {
+  font-size: 2rem;
+  color: var(--color-verde-oscuro);
+  margin-bottom: 0.25rem;
+}
+
+.results-subtitle {
+  font-size: 1rem;
+  color: var(--color-piedra);
+  margin-bottom: 1.5rem;
+}
+
+/* Tablero de Métricas */
+.score-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.score-box {
+  background: var(--color-fondo);
+  border: 1px solid var(--color-pergamino-borde);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1rem;
+}
+
+.score-box-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--color-piedra);
+  margin-bottom: 0.35rem;
+}
+
+.score-box-value {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-verde-oscuro);
+  line-height: 1.1;
+}
+
+.score-box-sub {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-dorado-oscuro);
+  margin-top: 0.25rem;
+}
+
+/* Insignias Desbloqueadas en esta partida */
+.unlocked-badges-alert {
+  background: linear-gradient(135deg, var(--color-pergamino-claro) 0%, #FFF8E1 100%);
+  border: 1px solid var(--color-dorado);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  color: #795548;
+}
+
+/* Previsualización del Canvas de la Tarjeta Gráfica */
+.canvas-preview-section {
+  background: var(--color-pergamino-claro);
+  border: 1px solid var(--color-pergamino-borde);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.canvas-preview-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.canvas-preview-title {
+  font-size: 1.15rem;
+  color: var(--color-verde-oscuro);
+}
+
+.canvas-wrapper {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--color-dorado);
+  background: #141c19;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canvas-wrapper canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Botonera de Difusión y Compartición */
+.share-action-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.85rem;
+  margin-top: 1.25rem;
+}
+
+/* Sección de Conversión Institucional AEAC (Sección 8 de Especificación) */
+.conversion-box {
+  background: linear-gradient(135deg, var(--color-verde-oscuro) 0%, var(--color-verde-profundo) 100%);
+  color: var(--color-pergamino-claro);
+  border: 2px solid var(--color-dorado);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.conversion-box::after {
+  content: "🏛️";
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  font-size: 8rem;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.conversion-tag {
+  color: var(--color-dorado-brillo);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.conversion-quote {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--color-pergamino);
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+}
+
+.conversion-text {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: rgba(243, 232, 211, 0.9);
+  margin-bottom: 1.5rem;
+  max-width: 680px;
+}
+
+.conversion-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+/* Botonera de Reinicio de Partida */
+.results-footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}

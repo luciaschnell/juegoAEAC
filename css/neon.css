@@ -1,0 +1,240 @@
+/* ==========================================================================
+   SISTEMA DE EFECTOS INTERACTIVOS Y LUCES DE NEÓN ARCADE
+   Bordes luminosos interactivos, estela de chispas y resplandor al ratón
+   ========================================================================== */
+
+/* Canvas de partículas y chispas de neón */
+#neon-fx-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9997;
+}
+
+/* --------------------------------------------------------------------------
+   BARRAS DE LUZ DE NEÓN EN LOS 4 BORDES DE LA PANTALLA
+   -------------------------------------------------------------------------- */
+.neon-edge-bar {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+  will-change: transform, opacity;
+}
+
+/* Borde Izquierdo */
+#neon-edge-left {
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 220px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(180deg, transparent 0%, #fff 30%, #ffd166 60%, transparent 100%);
+  box-shadow: 0 0 15px 4px rgba(255, 209, 102, 0.9),
+              0 0 35px 10px rgba(255, 154, 0, 0.65),
+              0 0 60px 18px rgba(255, 120, 0, 0.35);
+}
+
+/* Borde Derecho */
+#neon-edge-right {
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 220px;
+  border-radius: 4px 0 0 4px;
+  background: linear-gradient(180deg, transparent 0%, #fff 30%, #00f5d4 60%, transparent 100%);
+  box-shadow: 0 0 15px 4px rgba(0, 245, 212, 0.9),
+              0 0 35px 10px rgba(0, 180, 216, 0.65),
+              0 0 60px 18px rgba(0, 119, 182, 0.35);
+}
+
+/* Borde Superior */
+#neon-edge-top {
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 240px;
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(90deg, transparent 0%, #fff 30%, #ffd166 60%, transparent 100%);
+  box-shadow: 0 0 15px 4px rgba(255, 209, 102, 0.9),
+              0 0 35px 10px rgba(255, 170, 0, 0.65),
+              0 0 60px 18px rgba(255, 130, 0, 0.35);
+}
+
+/* Borde Inferior */
+#neon-edge-bottom {
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 240px;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(90deg, transparent 0%, #fff 30%, #ff5400 60%, transparent 100%);
+  box-shadow: 0 0 15px 4px rgba(255, 84, 0, 0.9),
+              0 0 35px 10px rgba(247, 37, 133, 0.65),
+              0 0 60px 18px rgba(114, 9, 183, 0.35);
+}
+
+/* Aura de perímetro ambiental neón cuando el ratón se mueve por los bordes */
+.neon-ambient-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9996;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  box-shadow: inset 0 0 30px rgba(198, 161, 91, 0.25);
+}
+
+.neon-ambient-glow.active {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   FOCO DE NEÓN DINÁMICO EN TARJETAS (NEON SPOTLIGHT & TILT)
+   -------------------------------------------------------------------------- */
+.mode-card,
+.aeac-invite-card,
+.question-card,
+.castle-card,
+.conversion-box,
+.wordsearch-card,
+.hangman-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease-out, box-shadow 0.25s ease, border-color 0.25s ease;
+  will-change: transform;
+}
+
+/* Capa de resplandor neón que sigue al cursor dentro de cada tarjeta */
+.mode-card::after,
+.aeac-invite-card::after,
+.question-card::after,
+.castle-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(320px circle at var(--neon-x, -500px) var(--neon-y, -500px), 
+              rgba(223, 190, 122, 0.22) 0%, 
+              rgba(198, 161, 91, 0.08) 40%, 
+              transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.mode-card:hover::after,
+.aeac-invite-card:hover::after,
+.question-card:hover::after,
+.castle-card:hover::after {
+  opacity: 1;
+}
+
+.mode-card:hover {
+  border-color: var(--color-dorado-brillo) !important;
+  box-shadow: 0 12px 32px rgba(198, 161, 91, 0.22), 0 0 18px rgba(223, 190, 122, 0.35) !important;
+}
+
+/* --------------------------------------------------------------------------
+   BOTONES CON BRILLO NEÓN INTERACTIVO
+   -------------------------------------------------------------------------- */
+.btn-primary:hover {
+  box-shadow: 0 4px 18px rgba(198, 161, 91, 0.45), 0 0 25px rgba(223, 190, 122, 0.3) !important;
+}
+
+.btn-secondary:hover {
+  box-shadow: 0 4px 18px rgba(32, 43, 38, 0.35), 0 0 22px rgba(198, 161, 91, 0.3) !important;
+}
+
+.option-btn:hover:not(:disabled) {
+  border-color: var(--color-dorado) !important;
+  box-shadow: 0 6px 20px rgba(198, 161, 91, 0.25), 0 0 15px rgba(223, 190, 122, 0.2) !important;
+  transform: translateY(-2px) scale(1.008);
+}
+
+/* --------------------------------------------------------------------------
+   INSIGNIAS CON PULSO NEÓN ARCADE
+   -------------------------------------------------------------------------- */
+.badge-gold,
+.badge-fire,
+.badge-emerald,
+.combo-pill {
+  position: relative;
+  animation: neonBadgeGlow 2.2s infinite alternate ease-in-out;
+}
+
+@keyframes neonBadgeGlow {
+  0% {
+    box-shadow: 0 0 4px rgba(198, 161, 91, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(223, 190, 122, 0.7), 0 0 22px rgba(255, 170, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 4px rgba(198, 161, 91, 0.3);
+  }
+}
+
+.badge-fire {
+  animation: neonFireBadgeGlow 1.8s infinite alternate ease-in-out;
+}
+
+@keyframes neonFireBadgeGlow {
+  0% {
+    box-shadow: 0 0 4px rgba(239, 83, 80, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255, 84, 0, 0.75), 0 0 25px rgba(247, 37, 133, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 4px rgba(239, 83, 80, 0.3);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   ONDA EXPANSIVA DE NEÓN AL HACER CLIC (RIPPLE SHOCKWAVE)
+   -------------------------------------------------------------------------- */
+.neon-click-wave {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  border: 2px solid #ffd166;
+  box-shadow: 0 0 20px 4px rgba(255, 209, 102, 0.8), inset 0 0 12px 2px rgba(255, 170, 0, 0.6);
+  animation: neonWaveExpand 0.55s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+  z-index: 9999;
+}
+
+@keyframes neonWaveExpand {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  100% {
+    width: 140px;
+    height: 140px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  #neon-fx-canvas,
+  .neon-edge-bar,
+  .neon-click-wave {
+    display: none !important;
+  }
+  .mode-card,
+  .aeac-invite-card,
+  .question-card {
+    transform: none !important;
+  }
+}

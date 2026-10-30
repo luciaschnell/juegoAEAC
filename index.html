@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Reto Castillos de España | Juego Interactivo de Patrimonio Histórico</title>
+  <meta name="description" content="Descubre cuánto sabes sobre el patrimonio fortificado español. Identifica castillos reales, resuelve retos diarios y supera desafíos contrarreloj. Iniciativa vinculada a la Asociación Española de Amigos de los Castillos.">
+  <meta name="theme-color" content="#202B26">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- Open Graph & Twitter Cards para Compartición Viral -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Reto Castillos de España 🏰 ¿Cuánto sabes de nuestras fortalezas?">
+  <meta property="og:description" content="Juego interactivo gratuito sobre los castillos y murallas de España. Supera el Reto del Día y pon a prueba tus conocimientos históricos.">
+  <meta property="og:image" content="assets/images/loarre.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Reto Castillos de España 🏰">
+  <meta name="twitter:description" content="Juega gratis, adivina castillos reales y descubre el patrimonio fortificado español.">
+  <meta name="twitter:image" content="assets/images/loarre.jpg">
+
+  <!-- Fuentes Tipográficas Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos CSS Modulares -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/collection.css">
+  <link rel="stylesheet" href="css/share.css">
+  <link rel="stylesheet" href="css/neon.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       CABECERA DE LA EXPERIENCIA
+       ========================================================================= -->
+  <header class="game-header">
+    <div class="app-container">
+      <div class="header-inner">
+        <a href="#inicio" class="brand-badge" title="Ir al Inicio del Reto">
+          <img src="assets/images/logo_aeac.jpg" alt="AEAC" class="brand-emblem" onerror="this.src='favicon.ico'">
+          <div class="brand-titles">
+            <span class="brand-tag">Patrimonio Histórico</span>
+            <span class="brand-name">Reto Castillos de España</span>
+          </div>
+        </a>
+
+        <div class="header-status">
+          <button id="btn-auth-header" class="btn-auth-pill" title="Guardar racha (opcional)">
+            <span id="auth-header-icon">👤</span>
+            <span id="auth-header-label">Guardar Racha</span>
+          </button>
+          <button id="header-rank-pill" class="user-rank-pill" title="Ver mi rango y estadísticas">
+            <span id="header-rank-icon">🛡️</span>
+            <span id="header-rank-text">Aprendiz de fortaleza</span>
+          </button>
+          <button id="btn-mute" class="btn-icon" aria-label="Silenciar sonido" title="Sonido activado/desactivado">🔔</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       BARRA DE NAVEGACIÓN POR PESTAÑAS (TABS)
+       ========================================================================= -->
+  <nav class="nav-tabs" aria-label="Menú principal de modos">
+    <div class="app-container">
+      <div class="tabs-wrapper">
+        <button class="tab-btn" data-screen="coleccion">
+          <span>📖</span> Mi Colección
+        </button>
+        <button class="tab-btn" data-screen="perfil">
+          <span>👤</span> Mi Progreso
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =========================================================================
+       CONTENIDO PRINCIPAL / PANTALLAS
+       ========================================================================= -->
+  <main class="app-container">
+
+    <!-- -----------------------------------------------------------------------
+         PANTALLA 1: INICIO Y SELECCIÓN DE MODOS EN 2 SECCIONES
+         ----------------------------------------------------------------------- -->
+    <section id="screen-inicio" class="screen-view active">
+      <!-- Portada Arcade Compacta -->
+      <div class="hero-card" style="margin-bottom: 1.5rem;">
+        <div class="hero-banner-img-wrap">
+          <img src="assets/images/hero_arcade.jpg" alt="Arcade Reto Castillos de España" class="hero-banner-img">
+          <div class="hero-banner-overlay">
+            <h1 class="hero-title" style="font-size: 1.85rem; margin: 0; color: var(--color-pergamino); text-shadow: 0 3px 10px rgba(0,0,0,0.85); letter-spacing: 1px;">
+              ⚔️ RETO CASTILLOS DE ESPAÑA 🏰
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estado del Reto del Día en Portada (si ya se jugó hoy) -->
+      <div id="home-daily-status"></div>
+
+      <!-- ===================================================================
+           SECCIÓN 1: CULTURA GENERAL & RETOS DIARIOS (Tranquilo, sin prisas)
+           =================================================================== -->
+      <div class="game-section-block">
+        <div class="section-title-wrap">
+          <div class="section-icon-badge">🏛️</div>
+          <div>
+            <h2 class="section-heading">Cultura & Desafíos Diarios</h2>
+            <p class="section-subheading">Modalidades tranquilas de conocimiento histórico y patrimonio. <strong>Cambian cada día a las 00:00</strong>.</p>
+          </div>
+        </div>
+
+        <div class="modes-grid-2col">
+          <!-- Modo 1: Reto del Día -->
+          <article class="mode-card featured">
+            <div>
+              <span class="mode-badge badge-gold">⭐ Cada día 5 preguntas nuevas</span>
+              <h3 class="mode-title" style="font-size: 1.35rem; margin-top: 0.35rem;">Reto del Día</h3>
+              <p class="mode-desc">5 preguntas sobre fortalezas, arquitectura militar e historia de España. La misma selección para todos los jugadores en la misma fecha.</p>
+              <div class="mode-meta">
+                <span>⏱️ A tu ritmo</span>
+                <span>🏆 +100 pts/acierto</span>
+                <span>🔥 Bono racha</span>
+              </div>
+            </div>
+            <button class="btn btn-primary" data-action="start-mode" data-mode="diario" style="width: 100%; margin-top: 1.25rem;">
+              Jugar Reto de Hoy ⚔️
+            </button>
+          </article>
+
+          <!-- Modo 2: Adivina el Castillo Diario -->
+          <article class="mode-card" style="border-top: 4px solid var(--color-dorado-oscuro);">
+            <div>
+              <span class="mode-badge badge-emerald">📸 Cada día 5 castillos nuevos</span>
+              <h3 class="mode-title" style="font-size: 1.35rem; margin-top: 0.35rem;">Adivina el Castillo Diario</h3>
+              <p class="mode-desc">Identifica 5 fortalezas reales a partir de sus fotografías. Descubre su localización, siglo y peculiaridad histórica documentada.</p>
+              <div class="mode-meta">
+                <span>🖼️ 5 fotos del día</span>
+                <span>📖 Desbloquea álbum</span>
+                <span>🔄 Rota a medianoche</span>
+              </div>
+            </div>
+            <button class="btn btn-secondary" data-action="start-mode" data-mode="adivina" style="width: 100%; margin-top: 1.25rem; background: var(--color-verde-oscuro); color: var(--color-dorado-brillo); border-color: var(--color-dorado);">
+              Identificar Castillos de Hoy 🎯
+            </button>
+          </article>
+        </div>
+      </div>
+
+      <!-- ===================================================================
+           SECCIÓN 2: ENTRETENIMIENTO & PASATIEMPOS (Lúdico, palabras, arcade)
+           =================================================================== -->
+      <div class="game-section-block">
+        <div class="section-title-wrap">
+          <div class="section-icon-badge" style="background: linear-gradient(135deg, #7c2d12, #b45309);">🏹</div>
+          <div>
+            <h2 class="section-heading">Entretenimiento & Pasatiempos</h2>
+            <p class="section-subheading">Pasatiempos de palabras, adivinanzas y desafíos arcade con nombres y términos de fortalezas.</p>
+          </div>
+        </div>
+
+        <div class="modes-grid-3col">
+          <!-- Pasatiempo 1: Sopa de Letras / Buscapalabras -->
+          <article class="mode-card">
+            <div>
+              <span class="mode-badge badge-gold">🧩 Tablero Diario</span>
+              <h3 class="mode-title" style="font-size: 1.15rem; margin-top: 0.35rem;">Buscapalabras de Castillos</h3>
+              <p class="mode-desc">Encuentra en la cuadrícula nombres de fortalezas (Loarre, Coca...) y elementos militares (almena, barbacana...).</p>
+              <div class="mode-meta">
+                <span>🔍 5 términos</span>
+                <span>🏆 +250 pts</span>
+              </div>
+            </div>
+            <button class="btn btn-primary" data-action="open-sopa" style="width: 100%; margin-top: 1.25rem;">
+              Jugar Buscapalabras 🔍
+            </button>
+          </article>
+
+          <!-- Pasatiempo 2: El Ahorcado de la Fortaleza -->
+          <article class="mode-card">
+            <div>
+              <span class="mode-badge badge-fire">🛡️ Adivinanza Clásica</span>
+              <h3 class="mode-title" style="font-size: 1.15rem; margin-top: 0.35rem;">El Ahorcado Medieval</h3>
+              <p class="mode-desc">Adivina la fortaleza o elemento defensivo letra a letra con pistas históricas antes de agotar tus 6 escudos defensivos.</p>
+              <div class="mode-meta">
+                <span>⌨️ Teclado táctil</span>
+                <span>🏆 +150 pts</span>
+              </div>
+            </div>
+            <button class="btn btn-secondary" data-action="open-ahorcado" style="width: 100%; margin-top: 1.25rem;">
+              Jugar al Ahorcado 🏹
+            </button>
+          </article>
+
+          <!-- Pasatiempo 3: Desafío Contrarreloj 60s -->
+          <article class="mode-card">
+            <div>
+              <span class="mode-badge badge-fire">⚡ 60 Segundos Frenéticos</span>
+              <h3 class="mode-title" style="font-size: 1.15rem; margin-top: 0.35rem;">Desafío Contrarreloj</h3>
+              <p class="mode-desc">Responde tantas preguntas como puedas antes de que el reloj llegue a cero. ¡Encadena aciertos para activar combos!</p>
+              <div class="mode-meta">
+                <span>⏱️ Reloj 60s</span>
+                <span>🔥 Combos x1.5</span>
+              </div>
+            </div>
+            <button class="btn btn-secondary" data-action="start-mode" data-mode="contrarreloj" style="width: 100%; margin-top: 1.25rem;">
+              Iniciar Contrarreloj ⚡
+            </button>
+          </article>
+        </div>
+      </div>
+
+      <!-- ===================================================================
+           APARTADO CULTURAL: SI TE GUSTA EL TEMA, ASÓCIATE (INDIRECTA AEAC)
+           =================================================================== -->
+      <section class="aeac-invite-card">
+        <div class="aeac-invite-inner">
+          <div class="aeac-invite-emblem">🏰</div>
+          <div class="aeac-invite-content">
+            <span class="aeac-invite-tag">Comunidad & Patrimonio</span>
+            <h3 class="aeac-invite-title">¿Te apasiona la historia de nuestros castillos?</h3>
+            <p class="aeac-invite-desc">
+              Detrás de cada torre, adarve y almena que ves en estos juegos hay siglos de historia fascinante. 
+              Si disfrutas descubriendo el pasado y te interesa este tema, existe una comunidad viva esperándote: la <strong>Asociación Española de Amigos de los Castillos (AEAC)</strong>, entidad fundada en 1952 y declarada de Utilidad Pública.
+              Organizan viajes y rutas culturales por fortalezas de toda España, publican cuadernos de investigación y ayudan a conservar en pie monumentos únicos como el Castillo de Villafuerte. 
+              <strong>Asociarte es totalmente libre y voluntario</strong>: la mejor manera de compartir esta afición con personas afines.
+            </p>
+            <div class="aeac-invite-actions">
+              <a href="https://www.xn--castillosdeespaa-lub.es/es/content/asociate-como-asociarse-la-aeac" target="_blank" rel="noopener" class="btn btn-secondary" style="font-weight: 700;">
+                Descubre cómo hacerte socio ↗
+              </a>
+              <a href="https://www.xn--castillosdeespaa-lub.es/es/buscador-castillos" target="_blank" rel="noopener" class="btn btn-outline" style="font-size: 0.88rem;">
+                Buscador Nacional de Fortalezas ↗
+              </a>
+              <a href="https://www.xn--castillosdeespaa-lub.es/es" target="_blank" rel="noopener" class="btn btn-outline" style="font-size: 0.88rem;">
+                Portal de Castillos de España ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PANTALLA 2: ÁREA ACTIVA DE PARTIDA
+         ----------------------------------------------------------------------- -->
+    <section id="screen-juego" class="screen-view">
+      <div id="game-active-area" class="game-stage">
+        <!-- Cabecera de la Partida -->
+        <div class="stage-header">
+          <div class="stage-tracker">
+            <span id="stage-mode-badge" class="stage-mode-label">Reto del Día</span>
+            <span id="stage-counter-text" class="stage-counter">Pregunta 1 de 5</span>
+          </div>
+
+          <div class="stage-stats">
+            <div id="stage-combo-pill" class="combo-pill" style="display: none;">
+              <span>🔥</span> <span id="stage-combo-val">x1.25</span>
+            </div>
+            <div id="stage-score-text" class="score-counter-pill">
+              0 pts
+            </div>
+          </div>
+        </div>
+
+        <!-- Barra de Tiempo (Modo Contrarreloj) -->
+        <div id="stage-time-bar-wrap" class="time-bar-wrapper" style="display: none;">
+          <div class="time-bar-info">
+            <span>Tiempo restante</span>
+            <span id="stage-time-text" class="time-text">60s</span>
+          </div>
+          <div class="progress-track">
+            <div id="stage-progress-fill" class="progress-fill" style="width: 100%;"></div>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Pregunta -->
+        <div class="question-card">
+          <!-- Visor de Foto (opcional según la pregunta) -->
+          <div id="game-img-box" class="question-image-box" style="display: none;">
+            <img id="game-question-img" src="" alt="Fotografía del castillo" class="question-img">
+            <span id="game-img-credit" class="question-img-credit">AEAC</span>
+          </div>
+
+          <div class="question-statement-box">
+            <h2 id="game-question-prompt" class="question-statement">Cargando desafío...</h2>
+          </div>
+        </div>
+
+        <!-- Rejilla de Opciones (A, B, C, D) -->
+        <div id="game-options-container" class="options-grid">
+          <!-- Generado dinámicamente -->
+        </div>
+
+        <!-- Hoja de Explicación Didáctica Inmediata -->
+        <div id="game-feedback-sheet" class="feedback-sheet">
+          <div class="feedback-header">
+            <div id="feedback-status-text" class="feedback-status correct">
+              ¡Respuesta Correcta!
+            </div>
+            <span id="feedback-points-gain" class="points-badge-gain">+100 pts</span>
+          </div>
+
+          <p id="feedback-explanation-text" class="feedback-text">
+            Explicación rigurosa documentada...
+          </p>
+
+          <div id="feedback-source-text" class="feedback-source">
+            Referencia: AEAC
+          </div>
+
+          <div class="feedback-actions">
+            <button id="btn-next-question" class="btn btn-primary">
+              Siguiente Pregunta →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PANTALLA 3: RESULTADOS, TARJETA VIRAL Y COMPARTICIÓN
+         ----------------------------------------------------------------------- -->
+    <section id="screen-resultados" class="screen-view">
+      <div class="results-stage">
+        <div class="results-hero-card">
+          <div class="results-crown-icon">🏆</div>
+          <div id="results-new-record-badge" class="mode-badge badge-fire" style="display: none; margin: 0 auto 0.75rem auto;">⭐ ¡NUEVO RÉCORD CONTRARRELOJ!</div>
+          <h2 class="results-title">¡Partida Completada!</h2>
+          <p class="results-subtitle">Has demostrado tu pasión y conocimiento por el patrimonio fortificado.</p>
+
+          <!-- Tablero de Resultados -->
+          <div class="score-dashboard">
+            <div class="score-box">
+              <div class="score-box-label">Puntuación Total</div>
+              <div id="results-score-val" class="score-box-value">0</div>
+              <div class="score-box-sub">PUNTOS GANADOS</div>
+            </div>
+
+            <div class="score-box">
+              <div class="score-box-label">Aciertos</div>
+              <div id="results-correct-val" class="score-box-value">0/5</div>
+              <div class="score-box-sub">RESPUESTAS CORRECTAS</div>
+            </div>
+
+            <div class="score-box">
+              <div class="score-box-label">Rango Alcanzado</div>
+              <div id="results-rank-icon" style="font-size: 2rem;">🛡️</div>
+              <div id="results-rank-name" class="score-box-sub" style="font-weight: 700; color: var(--color-verde-oscuro);">Aprendiz</div>
+            </div>
+          </div>
+
+          <!-- Alerta de Insignias Nuevas -->
+          <div id="results-badges-alert" class="unlocked-badges-alert" style="display: none;">
+            <span>🎉</span>
+            <div>¡Nueva insignia conseguida! <span id="results-badges-list"></span></div>
+          </div>
+
+          <!-- Previsualización de la Tarjeta Gráfica en Canvas -->
+          <div class="canvas-preview-section">
+            <div class="canvas-preview-header">
+              <h3 class="canvas-preview-title">Tu Tarjeta Gráfica de Resultado</h3>
+              <button id="btn-download-card" class="btn btn-outline" style="min-height: 40px; font-size: 0.85rem; padding: 0.35rem 0.85rem;">
+                <span>📥</span> Descargar Imagen (PNG)
+              </button>
+            </div>
+
+            <div class="canvas-wrapper">
+              <canvas id="score-card-canvas" width="1200" height="630"></canvas>
+            </div>
+
+            <!-- Botonera de Compartición Viral -->
+            <div class="share-action-buttons">
+              <button id="btn-share-whatsapp" class="btn btn-whatsapp">
+                <span>💬</span> Compartir por WhatsApp
+              </button>
+              <button id="btn-share-native" class="btn btn-secondary">
+                <span>📤</span> Compartir con Amigos
+              </button>
+              <button id="btn-copy-summary" class="btn btn-outline">
+                <span>📋</span> Copiar Resumen
+              </button>
+            </div>
+          </div>
+
+          <!-- Bloque de Conversión a Seguidores y Socios de la AEAC -->
+          <div class="conversion-box" style="text-align: left; margin-top: 2rem;">
+            <span class="conversion-tag">Asociación Amigos de los Castillos</span>
+            <h3 class="conversion-quote">¿Te apasiona el mundo de los castillos?</h3>
+            <p class="conversion-text">
+              Si disfrutas descifrando la historia y arquitectura de nuestras fortalezas, te encantará formar parte de la <strong>AEAC</strong>. 
+              Podrás participar en viajes culturales exclusivos por castillos de toda España, recibir revistas de investigación y apoyar la conservación de nuestro patrimonio medieval. 
+              Hacerte socio es completamente voluntario y sin compromiso.
+            </p>
+            <div class="conversion-buttons">
+              <a href="https://www.xn--castillosdeespaa-lub.es/es/content/asociate-como-asociarse-la-aeac" target="_blank" rel="noopener" class="btn btn-primary">
+                DESCUBRE CÓMO HACERTE SOCIO ↗
+              </a>
+              <a href="https://www.xn--castillosdeespaa-lub.es/es" target="_blank" rel="noopener" class="btn btn-outline" style="color: var(--color-pergamino); border-color: var(--color-dorado);">
+                CONOCE LA ASOCIACIÓN ↗
+              </a>
+              <button id="btn-share-modal-cta" class="btn btn-secondary" onclick="document.getElementById('btn-share-native').click()">
+                COMPARTE EL RETO
+              </button>
+            </div>
+          </div>
+
+          <!-- Botones Finales de Navegación -->
+          <div class="results-footer-nav">
+            <button id="btn-play-again" class="btn btn-primary">
+              <span>🔄</span> Jugar de Nuevo
+            </button>
+            <a href="#coleccion" class="btn btn-outline">
+              <span>📖</span> Ver Mi Colección
+            </a>
+            <a href="#inicio" class="btn btn-secondary">
+              <span>🏠</span> Volver al Inicio
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PANTALLA: BUSCAPALABRAS / SOPA DE LETRAS DE CASTILLOS
+         ----------------------------------------------------------------------- -->
+    <section id="screen-sopa" class="screen-view">
+      <div style="margin-bottom: 1rem;">
+        <button class="btn btn-outline" data-action="go-home" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 40px; padding: 0.4rem 1rem;">
+          <span>⚔️</span> Volver a los Juegos
+        </button>
+      </div>
+      <div id="sopa-mount-point">
+        <!-- Renderizado dinámicamente por WordSearchMode -->
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PANTALLA: EL AHORCADO DE LA FORTALEZA
+         ----------------------------------------------------------------------- -->
+    <section id="screen-ahorcado" class="screen-view">
+      <div style="margin-bottom: 1rem;">
+        <button class="btn btn-outline" data-action="go-home" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 40px; padding: 0.4rem 1rem;">
+          <span>⚔️</span> Volver a los Juegos
+        </button>
+      </div>
+      <div id="ahorcado-mount-point">
+        <!-- Renderizado dinámicamente por HangmanMode -->
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PANTALLA 4: COLECCIÓN Y ÁLBUM DE CASTILLOS
+         ----------------------------------------------------------------------- -->
+    <section id="screen-coleccion" class="screen-view">
+      <div style="margin-bottom: 1rem;">
+        <button class="btn btn-outline" data-action="go-home" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 40px; padding: 0.4rem 1rem;">
+          <span>⚔️</span> Volver a los Juegos
+        </button>
+      </div>
+
+      <div class="collection-header-card">
+        <div class="collection-stats-bar">
+          <div>
+            <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Álbum de Fortalezas Españolas</h2>
+            <p style="font-size: 0.88rem; color: var(--color-piedra-oscura);">Desbloquea las 22 fortalezas reales documentadas jugando en los distintos desafíos.</p>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; color: var(--color-dorado-oscuro);" id="col-count-unlocked">0</span>
+            <span style="font-size: 1rem; color: var(--color-piedra);">/ <span id="col-count-total">22</span></span>
+          </div>
+        </div>
+
+        <div class="collection-progress-wrap">
+          <div class="collection-progress-text">
+            <span>Progreso del Álbum</span>
+            <span>Descubiertos en el juego</span>
+          </div>
+          <div class="progress-track" style="height: 12px;">
+            <div id="col-progress-fill" class="progress-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Filtros -->
+      <div class="filters-bar">
+        <button class="filter-pill active" data-filter="todos">Todos (22)</button>
+        <button class="filter-pill" data-filter="descubiertos">✓ Descubiertos</button>
+        <button class="filter-pill" data-filter="bloqueados">🔒 Por Descubrir</button>
+        
+        <select id="collection-region-select" style="margin-left: auto; padding: 0.4rem 0.75rem; border-radius: var(--radius-full); border: 1px solid var(--color-pergamino-borde); background: white; font-family: inherit; font-size: 0.82rem; font-weight: 600; color: var(--color-piedra-oscura);">
+          <option value="todas">Todas las Comunidades</option>
+          <option value="Andalucía">Andalucía</option>
+          <option value="Aragón">Aragón</option>
+          <option value="Castilla y León">Castilla y León</option>
+          <option value="Castilla-La Mancha">Castilla-La Mancha</option>
+          <option value="Cataluña">Cataluña</option>
+          <option value="Comunidad de Madrid">Comunidad de Madrid</option>
+          <option value="Comunitat Valenciana">Comunitat Valenciana</option>
+          <option value="Comunidad Foral de Navarra">Navarra</option>
+          <option value="Illes Balears">Illes Balears</option>
+          <option value="País Vasco">País Vasco</option>
+        </select>
+      </div>
+
+      <!-- Rejilla de Fortalezas -->
+      <div id="collection-castles-grid" class="collection-grid">
+        <!-- Generado dinámicamente -->
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PANTALLA 5: PERFIL, ESTADÍSTICAS E INSIGNIAS
+         ----------------------------------------------------------------------- -->
+    <section id="screen-perfil" class="screen-view">
+      <div style="margin-bottom: 1rem;">
+        <button class="btn btn-outline" data-action="go-home" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 40px; padding: 0.4rem 1rem;">
+          <span>⚔️</span> Volver a los Juegos
+        </button>
+      </div>
+
+      <div class="hero-card" style="padding: 2rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div id="profile-rank-icon" style="font-size: 3.5rem;">🛡️</div>
+            <div>
+              <span class="mode-badge badge-gold">Rango Actual</span>
+              <h2 id="profile-rank-name" style="font-size: 1.8rem; margin: 0.2rem 0;">Aprendiz de fortaleza</h2>
+              <div style="font-size: 0.9rem; color: var(--color-piedra-oscura);">Puntos acumulados: <strong id="profile-total-points" style="color: var(--color-dorado-oscuro);">0</strong> pts</div>
+            </div>
+          </div>
+          <button id="btn-reset-progress" class="btn btn-outline" style="min-height: 38px; font-size: 0.75rem; padding: 0.25rem 0.75rem; color: var(--color-error); border-color: var(--color-error);">
+            Reiniciar progreso
+          </button>
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem;">
+            <span>Progreso hacia el siguiente rango</span>
+            <span id="profile-rank-next-text">Cargando...</span>
+          </div>
+          <div class="progress-track" style="height: 12px;">
+            <div id="profile-rank-progress-fill" class="progress-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Métricas Clave -->
+        <div class="score-dashboard">
+          <div class="score-box">
+            <div class="score-box-label">Partidas Jugadas</div>
+            <div id="profile-games-played" class="score-box-value">0</div>
+          </div>
+          <div class="score-box">
+            <div class="score-box-label">Porcentaje de Acierto</div>
+            <div id="profile-accuracy-rate" class="score-box-value">0%</div>
+          </div>
+          <div class="score-box">
+            <div class="score-box-label">Racha Actual</div>
+            <div id="profile-streak-current" class="score-box-value">0 días</div>
+          </div>
+          <div class="score-box">
+            <div class="score-box-label">Racha Récord</div>
+            <div id="profile-streak-max" class="score-box-value">0 días</div>
+          </div>
+        </div>
+
+        <!-- Insignias Desbloqueables -->
+        <h3 style="font-size: 1.3rem; margin: 2rem 0 1rem 0;">Insignias Heráldicas Desbloqueables</h3>
+        <div id="profile-badges-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+          <!-- Generado dinámicamente -->
+        </div>
+
+        <!-- Historial de Partidas Recientes -->
+        <h3 style="font-size: 1.3rem; margin: 2rem 0 1rem 0;">Historial Reciente</h3>
+        <ul id="profile-history-list" style="list-style: none; background: white; border-radius: var(--radius-md); border: 1px solid var(--color-pergamino-borde); overflow: hidden;">
+          <!-- Generado dinámicamente -->
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       MODAL DE DETALLE DE CASTILLO (COLECCIÓN)
+       ========================================================================= -->
+  <div id="castle-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="modal-close-btn" aria-label="Cerrar ventana">&times;</button>
+      <div id="castle-modal-details">
+        <!-- Rellenado dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL DE AUTENTICACIÓN Y RACHA (OPCIONAL, SIN OBLIGACIÓN)
+       ========================================================================= -->
+  <div id="auth-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-content" style="max-width: 440px;">
+      <button class="modal-close-btn" aria-label="Cerrar ventana">&times;</button>
+      <div style="text-align: center; margin-bottom: 1rem;">
+        <span style="font-size: 2.5rem;">👑</span>
+        <h3 id="auth-modal-title" style="font-size: 1.4rem; margin-top: 0.25rem;">Guardar Racha de Juego</h3>
+        <p style="font-size: 0.85rem; color: var(--color-piedra-oscura);">Vincula tu apodo para proteger tu racha y logros.</p>
+      </div>
+
+      <div class="not-required-notice">
+        <span>🛡️</span>
+        <div><strong>No es obligatorio registrarse.</strong> Puedes seguir jugando siempre como invitado sin crear cuenta.</div>
+      </div>
+
+      <div class="auth-tabs">
+        <button id="tab-auth-login" class="auth-tab-btn active" type="button">Iniciar Sesión</button>
+        <button id="tab-auth-register" class="auth-tab-btn" type="button">Crear Cuenta</button>
+      </div>
+
+      <form id="auth-form">
+        <div class="form-group">
+          <label class="form-label" for="auth-username">Apodo de Jugador o Correo</label>
+          <input type="text" id="auth-username" class="form-input" placeholder="Ej: CaballeroRodrigo" required autocomplete="username">
+        </div>
+
+        <div class="form-group" id="group-auth-pass">
+          <label class="form-label" for="auth-password">Contraseña o PIN (4 dígitos)</label>
+          <input type="password" id="auth-password" class="form-input" placeholder="••••" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" id="btn-submit-auth" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+          Guardar Racha
+        </button>
+      </form>
+
+      <div id="auth-logged-in-box" style="display: none; text-align: center; padding: 1rem 0;">
+        <p style="font-size: 1rem; color: var(--color-verde-oscuro); margin-bottom: 1rem;">
+          Sesión activa con el jugador <strong id="logged-player-name">Rodrigo</strong>
+        </p>
+        <button id="btn-logout" class="btn btn-outline" style="min-height: 38px; font-size: 0.85rem; padding: 0.4rem 1rem; color: var(--color-error); border-color: var(--color-error);" type="button">
+          Cerrar Sesión (Volver a Modo Invitado)
+        </button>
+      </div>
+
+      <div style="margin-top: 1.25rem; text-align: center;">
+        <button type="button" class="modal-close-action" style="background: none; border: none; font-size: 0.82rem; color: var(--color-piedra); cursor: pointer; text-decoration: underline;">
+          Continuar jugando como Invitado (Sin registro)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: ¿QUIERES SER SOCIO DE LA AEAC? (TRAS GUARDAR RACHA)
+       ========================================================================= -->
+  <div id="socio-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-content" style="max-width: 480px; text-align: center; padding: 2rem 1.75rem;">
+      <button class="modal-close-btn" aria-label="Cerrar ventana">&times;</button>
+      
+      <div style="width: 62px; height: 62px; margin: 0 auto 0.85rem auto; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--color-verde-oscuro), #131c18); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: var(--shadow-md);">
+        🏰
+      </div>
+
+      <span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-dorado-oscuro); display: block; margin-bottom: 0.35rem;">
+        ¡Racha asegurada para <span id="socio-modal-username">jugador</span>!
+      </span>
+
+      <h3 style="font-size: 1.45rem; margin-bottom: 0.75rem; font-family: var(--font-serif); color: var(--color-verde-oscuro); line-height: 1.3;">
+        ¿Quieres ser socio de la Asociación Amigos de los Castillos?
+      </h3>
+
+      <p style="font-size: 0.92rem; line-height: 1.6; color: var(--color-piedra-oscura); margin-bottom: 1.25rem; text-align: left;">
+        Si te apasionan las fortalezas y la historia de España, puedes dar un paso más allá del videojuego y formar parte de la <strong>AEAC</strong> (fundada en 1952 y de Utilidad Pública):
+      </p>
+
+      <div style="text-align: left; background: var(--color-pergamino-claro); border: 1px solid var(--color-pergamino-borde); border-radius: var(--radius-md); padding: 0.85rem 1rem; margin-bottom: 1.5rem; font-size: 0.88rem; color: var(--color-verde-oscuro); display: flex; flex-direction: column; gap: 0.5rem;">
+        <div style="display: flex; align-items: flex-start; gap: 0.5rem;">
+          <span>🚌</span> <span><strong>Viajes culturales exclusivos</strong> recorriendo castillos por toda España.</span>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 0.5rem;">
+          <span>📖</span> <span><strong>Revistas e investigaciones</strong> de arquitectura militar y castellología.</span>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 0.5rem;">
+          <span>🛡️</span> <span><strong>Apoyo a la conservación</strong> y restauración de fortalezas vivas.</span>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <a href="https://www.xn--castillosdeespaa-lub.es/es/content/asociate-como-asociarse-la-aeac" target="_blank" rel="noopener" class="btn btn-secondary" style="font-size: 0.95rem; font-weight: 700; padding: 0.75rem 1.25rem; width: 100%; box-shadow: var(--shadow-sm); text-align: center;">
+          ¡Sí, quiero conocer cómo asociarme! ↗
+        </a>
+        <button type="button" class="btn btn-outline modal-close-action" style="font-size: 0.88rem; width: 100%;">
+          Continuar jugando al videojuego
+        </button>
+      </div>
+
+      <div style="margin-top: 1rem; font-size: 0.78rem; color: var(--color-piedra);">
+        Hacerte socio es 100% voluntario y libre. ¡Gracias por defender nuestro patrimonio!
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor Flotante de Notificaciones Toast -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- =========================================================================
+       PIE DE PÁGINA INSTITUCIONAL AEAC
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="app-container">
+      <div class="footer-grid">
+        <div>
+          <h4 class="footer-col-title">Reto Castillos de España</h4>
+          <p class="footer-desc">
+            Videojuego cultural de acceso libre inspirado en el patrimonio fortificado y vinculado a la Asociación Española de Amigos de los Castillos (AEAC, entidad de Utilidad Pública fundada en 1952).
+          </p>
+          <div style="font-size: 0.85rem; color: rgba(243, 232, 211, 0.8); margin-top: 0.5rem;">
+            🎮 <strong>Modo Videojuego:</strong> Guarda tus récords, pon a prueba tu memoria histórica y desbloquea el álbum de fortalezas.
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Enlaces Verificados</h4>
+          <ul class="footer-links">
+            <li><a href="https://www.xn--castillosdeespaa-lub.es/es" target="_blank" rel="noopener">🌐 Portal Oficial de Castillos de España</a></li>
+            <li><a href="https://www.xn--castillosdeespaa-lub.es/es/content/castillo-de-villafuerte-de-esgueva-y-la-aeac" target="_blank" rel="noopener">🏰 Castillo de Villafuerte (Sede y Propiedad)</a></li>
+            <li><a href="https://www.xn--castillosdeespaa-lub.es/es/buscador-castillos" target="_blank" rel="noopener">📚 Inventario de Arquitectura Militar</a></li>
+            <li><a href="https://www.xn--castillosdeespaa-lub.es/es/content/asociate-como-asociarse-la-aeac" target="_blank" rel="noopener">🤝 Información para Hacerse Socio</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Redes Sociales Oficiales</h4>
+          <ul class="footer-links">
+            <li><a href="https://www.tiktok.com/@castillosasociacionsp" target="_blank" rel="noopener">🎵 TikTok @castillosasociacionsp</a></li>
+            <li><a href="https://www.instagram.com/castillosasociacion/" target="_blank" rel="noopener">📸 Instagram @castillosasociacion</a></li>
+            <li><a href="https://www.youtube.com/@castillosasociacion" target="_blank" rel="noopener">▶️ YouTube @castillosasociacion</a></li>
+            <li><a href="https://www.facebook.com/asocCASTILLOS" target="_blank" rel="noopener">📘 Facebook /asocCASTILLOS</a></li>
+            <li><a href="https://x.com/asocCastillos" target="_blank" rel="noopener">𝕏 Twitter (X) @asocCastillos</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 <strong>Reto Castillos de España</strong> • Una experiencia cultural de libre acceso vinculada a la AEAC.
+        </div>
+        <div>
+          Progreso y estadísticas almacenadas localmente en tu navegador. Sin cookies publicitarias ni rastreadores de terceros.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts Modulares ES6 -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
